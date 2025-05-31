@@ -291,9 +291,7 @@ server.post("/updateexpanse/:id", async (req,res) => {
     const decode = jwt.verify(Token, "param")
     const userId = decode.userId
     const expanseId = req.params.id
-    console.log(expanseId);
     
-console.log(req.body);
 
     const {amount,category,description} = req.body 
     
@@ -336,6 +334,59 @@ console.log(req.body);
         data : updateexpanse
     })
 
+})
+
+server.post("/deleteuser", async(req,res) => {
+        const Token = req.cookies.Token
+
+        if(!Token){
+            res.json({
+                statuscode : 404,
+                message : "No token found, Please login again !!",
+                success : false,
+                data : {}
+            })
+            return
+        }
+
+        const decode = jwt.verify(Token, "param")
+        const userId = decode.userId
+        const existingUser = await user.findById(userId)
+
+        if (!existingUser) {
+            return res.json({
+                statuscode: 404,
+                message: "User not found!",
+                success: false,
+                data: {}
+            });
+        }
+
+        await Expanse.deleteMany({user : userId})
+
+        await user.findByIdAndDelete(userId)
+
+        res.clearCookie("Token")
+
+        res.json({
+            statuscode : 200,
+            message : "User and related expenses deleted successfully",
+            success : true,
+            data : {}
+        })
+
+})
+
+server.post("/logoutuser", (req,res) => {
+    res.clearCookie("Token")
+
+    res.json({
+        statuscode : 200,
+        message : "User logout successfully",
+        success : true,
+        data : {}
+        
+    })
 })
 
 
