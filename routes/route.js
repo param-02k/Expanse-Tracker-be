@@ -9,9 +9,9 @@ router.post('/loginuser', loginuser);
 
 router.post('/addexpense', addExpense);
 
-router.get('/getallexpanse', getallexpanse);
+router.get('/getallexpense', getallexpanse);
 
-router.post('/updateexpanse', updateexpanse);
+router.post('/updateexpense', updateexpanse);
 
 router.post('/deleteuser', deleteuser);
 
