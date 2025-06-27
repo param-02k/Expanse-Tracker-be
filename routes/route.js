@@ -11,7 +11,7 @@ router.post('/addexpense', addExpense);
 
 router.get('/getallexpense', getallexpanse);
 
-router.post('/updateexpense', updateexpanse);
+router.post('/updateexpense/:_id', updateexpanse);
 
 router.post('/deleteuser', deleteuser);
 

@@ -273,9 +273,25 @@ const updateexpanse = async (req, res) => {
         })
     }
 
+    //     let decode;
+    // try {
+    //     decode = jwt.verify(Token, "param");
+    // } catch (err) {
+    //     return res.status(403).json({
+    //         statuscode: 403,
+    //         message: "Invalid or expired token",
+    //         success: false,
+    //         data: {}
+    //     });
+    // }
+
+
     const decode = jwt.verify(Token, "param")
     const userId = decode.userId
-    const expenseId = req.params.id
+    const expenseId = req.params._id
+
+    console.log("userId from token:", userId);
+    console.log("expenseId from params:", expenseId);
 
 
     const { amount, category, description } = req.body
@@ -295,6 +311,7 @@ const updateexpanse = async (req, res) => {
         _id: expenseId,
         user: userId
     })
+
 
     if (!oldexpanse) {
         res.json({
